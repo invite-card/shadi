@@ -1,0 +1,881 @@
+        :root {
+            --primary-red: #C41E3A;
+            --soft-pink: #fadddd;
+            --gold: #c7a86b;
+            --text-dark: #2c2c2c;
+            --card-bg: rgba(255, 255, 255, 0.96);
+            /* --center-flower-img: url('https://static.vecteezy.com/system/resources/thumbnails/057/728/575/small/red-roses-and-ribbon-banner-design-element-png.png'); */
+            /* CSS Standard for forcing light mode */
+            color-scheme: light;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* ADD THIS NEW CLASS */
+        .bg-fixed-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
+            background-image: url('images/bgv.jpg');
+            background-size: cover !important;
+            background-position: center center;
+            z-index: -10;
+            /* Behind everything */
+            will-change: transform;
+            /* Hint for GPU acceleration */
+
+            /* Optional: Keep the breathing animation here */
+            animation: bg-breathe 30s infinite alternate;
+        }
+
+        /* Background Fade */
+        body::before {
+            /* Only keep the darkness overlay */
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -5;
+            /* sits between bg-layer and content */
+        }
+
+        @keyframes bg-breathe {
+            0% {
+                background-size: 100%;
+            }
+
+            100% {
+                background-size: 110%;
+            }
+        }
+
+        .card {
+            position: relative;
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 700px;
+            /* Desktop Height */
+            box-shadow: 0 10px 90px #d02729;
+            overflow: hidden;
+            text-align: center;
+            color: var(--text-dark);
+            border-radius: 8px;
+            border: 1px solid #eaddc5;
+            transition: all 0.3s ease;
+        }
+
+        /* --- CARD BACKGROUND IMAGE (WATERMARK) --- */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /*background-image: url('https://template.canva.com/EAGD4XKFrp4/1/0/1131w-K4N-pEdITXY.jpg');*/
+            background-image: url('./images/s.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 1;
+            /* Fixed opacity */
+            z-index: 0;
+            /* mix-blend-mode: multiply; */
+        }
+
+        /* --- Rising Flowers Animation --- */
+        .rising-flowers {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 100%;
+            height: 400px;
+            background-image: var(--center-flower-img);
+            background-size: contain;
+            background-position: bottom center;
+            background-repeat: no-repeat;
+            z-index: 3;
+            opacity: 0.9;
+            transform: translateX(-50%) translateY(100%);
+            animation: riseUp 4s ease-out forwards;
+            animation-delay: 1s;
+        }
+
+        @keyframes riseUp {
+            0% {
+                transform: translateX(-50%) translateY(100%);
+            }
+
+            100% {
+                transform: translateX(-50%) translateY(37%);
+            }
+        }
+
+        /* --- Watercolor Blobs --- */
+        .watercolor-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            z-index: 0;
+            opacity: 0.3;
+            animation: breathe 8s infinite ease-in-out;
+        }
+
+        .blob-1 {
+            top: 10%;
+            right: -20%;
+            width: 350px;
+            height: 350px;
+            background: var(--soft-pink);
+        }
+
+        .blob-2 {
+            bottom: 30%;
+            left: -20%;
+            width: 400px;
+            height: 400px;
+            background: #eccdc2;
+            animation-delay: -4s;
+        }
+
+        /* --- Content Styling --- */
+        .content {
+            position: relative;
+            z-index: 10;
+            padding: 130px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            height: 100%;
+            justify-content: center center;
+        }
+
+        h1.names {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(1.8rem, 6vw, 3.5rem);
+            color: var(--primary-red);
+            letter-spacing: normal;
+            /* FIX 1: Remove overflow:hidden so shadow isn't cut inside the box */
+            /* overflow: hidden;  <-- REMOVE THIS */
+
+            /* white-space: nowrap; */
+            text-shadow: 0 15px 10px rgba(199, 168, 107, 0.4);
+            opacity: 1;
+            clip-path: inset(-20px 100% -50px -20px);
+            filter: blur(0px);
+            /* The Animation */
+        }
+
+        .fname {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.0rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            /* margin-bottom: 15px; */
+            font-weight: 700;
+            color: var(--soft-gold);
+            animation-delay: 0.4s;
+            white-space: wrap;
+
+            opacity: 1;
+            -webkit-clip-path: inset(-20px 100% -50px -20px);
+            clip-path: inset(-20px 100% -50px -20px);
+            filter: blur(0px);
+        }
+
+        h1.names.run-animation {
+            animation: inkFlow 3s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+            clip-path: inset(-20px 100% -50px -20px);
+        }
+
+        .fname.run-animation {
+            animation: inkFlow 2.0s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        .amp.run-animation {
+            animation: inkFlow 2.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+            animation-delay: 2s;
+        }
+
+        @keyframes inkFlow {
+            0% {
+                /* Hidden (masked from right) */
+                clip-path: inset(-20px 100% -50px -20px);
+                filter: blur(5px);
+            }
+
+            100% {
+                /* Fully Visible (Negative values reveal the shadow outside the text) */
+                clip-path: inset(-20px -20px -50px -20px);
+                filter: blur(0px);
+            }
+        }
+
+        .amp {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.5rem;
+            display: block;
+            color: var(--gold);
+            /* margin: 10px 0; */
+            font-weight: 600;
+            opacity: 1;
+            -webkit-clip-path: inset(-20px 100% -50px -20px);
+            clip-path: inset(-20px 100% -50px -20px);
+            filter: blur(0px);
+        }
+
+        .small-caps {
+            font-size: clamp(0.8rem, 4.5vw, 1.1rem);
+            letter-spacing: clamp(0.5px, 1vw, 3px);
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            font-family: 'Cinzel Decorative', serif;
+            margin-top: 2rem;
+        }
+
+        .invite-text {
+            font-size: clamp(0.8rem, 4.5vw, 1.1rem);
+            color: #c7a86b;
+            letter-spacing: clamp(0.5px, 1vw, 3px);
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-top: 1rem;
+            font-family: 'Cinzel Decorative', serif;
+        }
+
+        .location-text {
+            font-size: clamp(0.8rem, 4.5vw, 1.1rem);
+            line-height: 1.8;
+            color: #666;
+            letter-spacing: clamp(0.5px, 1vw, 3px);
+            text-transform: uppercase;
+            font-weight: 600;
+            font-family: 'Cinzel Decorative', serif;
+        }
+
+        .divider {
+            height: 1px;
+            width: 120px;
+            background: var(--gold);
+            margin: 0px auto 2rem auto;
+            opacity: 0.6;
+        }
+
+        .date-block {
+            margin: 15px 0;
+        }
+
+        .date {
+            font-weight: 700;
+            font-size: clamp(0.8rem, 4.5vw, 1.2rem);
+            text-transform: uppercase;
+            color: var(--primary-red);
+            letter-spacing: clamp(0.5px, 1vw, 3px);
+            font-family: 'Cinzel Decorative', serif;
+        }
+
+        @keyframes breathe {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #petals {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .firefly-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .firefly {
+            position: absolute;
+            background-image: url('images/pink-rose-flower.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0;
+            animation: floatUp ease-in infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100vh) translateX(20px);
+                opacity: 0;
+            }
+        }
+
+        /* =========================================
+           ADVANCED RESPONSIVE DESIGN (FIXED)
+           ========================================= */
+
+        /* 1. Tablet & Small Laptops (768px and down) */
+        @media (max-width: 768px) {
+            body {
+                background-attachment: scroll;
+                /* Fix scroll jitter on touch devices */
+            }
+
+            .card {
+                max-width: 90%;
+                padding-bottom: 50px;
+                min-height: auto;
+                /* IMPORTANT: Lets card shrink to fit content */
+            }
+
+            .content {
+                padding: 120px 20px 100px 20px;
+            }
+
+            h1.names {
+                font-size: 3rem;
+            }
+
+            h1.names span.amp {
+                font-size: 1.5rem;
+            }
+
+            /* =========================================
+       LAPTOP & SHORT SCREEN FIXES
+       ========================================= */
+
+            /* Target screens that are short (common laptops are 768px - 900px high) */
+            @media screen and (max-height: 900px) {
+
+                body {
+                    /* Switch from center to flex-start so the top doesn't get cut off when scrolling */
+                    align-items: flex-start;
+                    padding-top: 40px;
+                    padding-bottom: 40px;
+                    height: auto;
+                    /* Allow body to grow with scroll */
+                }
+
+                .card {
+                    /* Remove the forced 850px height */
+                    min-height: auto;
+                    height: auto;
+                    /* Let the card fit the content naturally */
+                    max-width: 550px;
+                }
+
+                .content {
+                    /* DRASTICALLY reduce the 180px top padding to fit short screens */
+                    padding: 60px 30px 50px 30px;
+                    gap: 8px;
+                    /* Reduce gap between elements */
+                }
+
+                h1.names {
+                    /* Scale down title slightly */
+                    font-size: 3rem;
+                    margin: 5px 0;
+                }
+
+                .watercolor-blob {
+                    /* Shrink blobs so they don't dominate the smaller card space */
+                    width: 250px;
+                    height: 250px;
+                }
+
+                .divider {
+                    margin: 15px auto;
+                }
+
+                /* Adjust the rising flower animation to sit lower */
+                /* If you have .rising-flowers defined in your HTML, this stops it covering text */
+                @keyframes riseUp {
+                    0% {
+                        transform: translateX(-50%) translateY(100%);
+                    }
+
+                    100% {
+                        /* Lower the final position (was 37%, now 10%) */
+                        transform: translateX(-50%) translateY(10%);
+                    }
+                }
+            }
+        }
+
+        /* 2. Large Mobile / Phablets (600px and down) */
+        @media (max-width: 600px) {
+
+            /* HIDE BACKGROUND IMAGE HERE */
+            .card::before {
+                display: none;
+            }
+
+            .card {
+                max-width: 92%;
+                margin: 20px auto;
+            }
+
+            .content {
+                padding: 90px 20px 70px 20px;
+            }
+
+            h1.names {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* 3. Standard Mobile (480px and down) */
+        @media (max-width: 480px) {
+            .card {
+                max-width: 95%;
+                margin: 15px auto;
+            }
+
+            .content {
+                padding: 60px 15px 40px 15px;
+                /* Reduced padding */
+                gap: 10px;
+            }
+
+            h1.names {
+                font-size: 2.2rem;
+                margin: 10px 0;
+            }
+
+            .invite-text {
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+
+            .watercolor-blob {
+                opacity: 0.2;
+            }
+
+            .divider {
+                margin: 15px auto;
+            }
+        }
+
+        /* 4. Tiny Mobile (iPhone SE, Folded Phones) */
+        @media (max-width: 350px) {
+            .content {
+                padding: 40px 10px 30px 10px;
+            }
+
+            h1.names {
+                font-size: 1.8rem;
+            }
+
+            h1.names span.amp {
+                font-size: 1.2rem;
+            }
+
+            .invite-text {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* 5. Short Screens (Landscape) */
+        @media (max-height: 750px) {
+            .card {
+                min-height: auto;
+                padding-bottom: 20px;
+            }
+
+            .content {
+                padding-top: 60px;
+                padding-bottom: 40px;
+            }
+
+            /* Adjust animation so flowers don't cover text on short screens */
+            @keyframes riseUp {
+                0% {
+                    transform: translateX(-50%) translateY(100%);
+                }
+
+                100% {
+                    transform: translateX(-50%) translateY(15%);
+                }
+            }
+        }
+
+
+        /* --- WELCOME OVERLAY --- */
+        #welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fdfbf7;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            /* CHANGE THIS: Start visible */
+            opacity: 1;
+            visibility: visible;
+
+            /* This handles the smooth fade out */
+            transition: opacity 1.5s ease, visibility 1.5s ease;
+        }
+
+        /* Add this class to hide it later */
+        .hidden-overlay {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none;
+            /* Allows clicking through it while fading */
+        }
+
+        .welcome-content {
+            text-align: center;
+            animation: fadeIn 2s ease;
+        }
+
+        .bismillah {
+            font-family: 'Great Vibes', cursive;
+            color: var(--gold);
+            margin-bottom: 20px;
+
+            /* FORCE SINGLE LINE */
+            white-space: nowrap;
+            width: 100%;
+            text-align: center;
+
+            /* RESPONSIVE FONT SIZE */
+            /* This scales the text: Min 1.5rem | Preferred 8% of screen | Max 5rem */
+            font-size: clamp(2.5rem, 9vw, 4rem);
+            /* ANIMATION: Fades in and moves down slightly */
+            opacity: 0;
+            /* Start invisible */
+            animation: fadeDrop 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation-delay: 0.2s;
+            /* Wait 0.5s before starting */
+        }
+
+        .names-intro {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            color: var(--primary-red);
+            font-weight: 600;
+
+            /* FORCE SINGLE LINE */
+            white-space: nowrap;
+            width: 100%;
+            text-align: center;
+
+            /* RESPONSIVE FONT SIZE */
+            /* Min 0.7rem | Preferred 3.5% of screen | Max 1.5rem */
+            font-size: clamp(0.7rem, 3.1vw, 1.5rem);
+
+            /* RESPONSIVE LETTER SPACING */
+            /* Spacing also needs to shrink on mobile, or it will break the line */
+            letter-spacing: clamp(1px, 1vw, 4px);
+            /* ANIMATION: Fades in while letters spread out */
+            opacity: 0;
+            letter-spacing: 0px;
+            /* Start tight */
+            animation: cinematicReveal 2s ease forwards;
+            animation-delay: 0.2s;
+            /* Starts after Bismillah finishes */
+        }
+
+        .enter-btn {
+            padding: 12px 30px;
+            /* border: 1px solid var(--gold); */
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 2rem;
+            /* cursor: pointer; */
+            transition: 0.3s;
+            display: inline-block;
+            border-radius: 8px;
+            background-color: white;
+
+            /* The Animation */
+
+            animation:
+                slideUpBtn 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
+                pulse-gold 2s infinite 1s;
+
+            box-shadow: 0 0 0 0 rgba(199, 168, 107, 0.7);
+
+            /* --- RESPONSIVE SINGLE LINE FIXES --- */
+            white-space: nowrap;
+            /* Forces text to stay on one line */
+
+            /* Responsive Font: Min 0.7rem, Max 1rem */
+            font-size: clamp(0.7rem, 4vw, 1rem);
+
+            /* Responsive Padding: Vertical 12px, Horizontal scales (10px to 30px) */
+            padding: 12px clamp(10px, 5vw, 30px);
+
+            /* Responsive Letter Spacing: shrinks on mobile */
+            letter-spacing: clamp(1px, 1vw, 2px);
+        }
+
+        /* Keyframes for the Pulse */
+        @keyframes pulse-gold {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(199, 168, 107, 0.7);
+
+                /* Start State */
+                background-color: #ffffff;
+                color: var(--gold);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(199, 168, 107, 0);
+
+                /* Peak State (Inverted) */
+                background-color: var(--gold);
+                color: #ffffff;
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(199, 168, 107, 0);
+
+                /* End State (Back to normal) */
+                background-color: #ffffff;
+                color: var(--gold);
+            }
+        }
+
+        @keyframes fadeDrop {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+                /* Starts higher */
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cinematicReveal {
+            0% {
+                opacity: 0;
+                letter-spacing: 0px;
+                filter: blur(5px);
+            }
+
+            100% {
+                opacity: 1;
+                /* Matches your clamp spacing logic */
+                letter-spacing: clamp(1px, 1vw, 4px);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes slideUpBtn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Ensure Pulse stays consistent */
+        @keyframes pulse-white {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+            }
+
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        /* Hide class to fade it out */
+        .hidden-overlay {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* --- VENUE LINK STYLING --- */
+        .venue-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: clamp(0.8rem, 4.5vw, 1.1rem);
+            /* Space between text and icon */
+            font-weight: 600;
+            color: var(--primary-red);
+            text-decoration: none;
+            letter-spacing: clamp(0.5px, 1vw, 3px);
+            margin-bottom: 5px;
+            position: relative;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.2s ease;
+            animation: bouncePin 0.6s infinite alternate;
+            font-family: 'Cinzel Decorative', serif;
+
+
+            /* RESPONSIVE LETTER SPACING */
+            /* Spacing also needs to shrink on mobile, or it will break the line */
+            letter-spacing: clamp(0.5px, 1vw, 3px);
+        }
+
+        /* Hover Effect */
+        .venue-link:hover {
+            color: var(--gold);
+            transform: translateY(-2px);
+            /* Slight lift effect */
+        }
+
+        .venue-link:hover::after {
+            width: 100%;
+            /* Underline expands on hover */
+        }
+
+        /* Subtle Underline Animation */
+        .venue-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        /* SVG Icon Styling */
+        .map-icon {
+            /* RESPONSIVE SIZE */
+            /* 1.1em makes it slightly larger than the text for better visibility */
+            /* It will now auto-scale based on the parent font-size */
+            width: 1.1em;
+            height: 1.1em;
+
+            fill: currentColor;
+            transition: transform 0.3s ease;
+
+            /* Fix alignment issues on some devices */
+            flex-shrink: 0;
+        }
+
+        /* Make icon bounce slightly on hover */
+        .venue-link:hover .map-icon {
+            animation: bouncePin 0.6s infinite alternate;
+        }
+
+        @keyframes bouncePin {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-3px);
+            }
+        }
+
+        .countdown {
+            /* --- TYPOGRAPHY --- */
+            font-family: 'Montserrat', sans-serif;
+            /* Changed to match your theme */
+            font-size: 0.9rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+
+            /* --- SHAPE & STYLE --- */
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #eee;
+            border-radius: 50px;
+            /* Pill shape matches your buttons */
+            padding: 10px 25px;
+
+            /* --- ALIGNMENT & WIDTH (The Fix) --- */
+            display: block;
+            /* Ensures it behaves like a box */
+            margin: 15px auto;
+            /* auto on left/right centers it */
+
+            width: fit-content;
+            /* Grow to fit the text exactly */
+            min-width: 220px;
+            /* But never get smaller than this */
+
+            /* Optional: shadow to make it pop */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
