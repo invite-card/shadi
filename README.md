@@ -1,1 +1,1 @@
- https://mrhtd.github.io/invite/
+ https://invite-card.github.io/shadi/
